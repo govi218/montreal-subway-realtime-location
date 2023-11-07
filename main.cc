@@ -2,8 +2,59 @@
 #include <string>
 #include <curl/curl.h>
 #include "./protobuf/gtfs-realtime.pb.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <unordered_map>
+#include <string>
 
 using namespace transit_realtime;
+
+std::vector<std::unordered_map<std::string, std::string>> parseCSV(const std::string& filePath) {
+    std::vector<std::unordered_map<std::string, std::string>> data;
+
+    // Open the CSV file
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filePath << std::endl;
+        return data;
+    }
+
+    // Read and parse the header row to get column names
+    std::string header;
+    if (std::getline(file, header)) {
+        std::istringstream headerStream(header);
+        std::vector<std::string> columnNames;
+        std::string column;
+        while (std::getline(headerStream, column, ',')) {
+            columnNames.push_back(column);
+        }
+
+        // Read and parse data rows
+        std::string line;
+        while (std::getline(file, line)) {
+            std::unordered_map<std::string, std::string> rowData;
+            std::istringstream lineStream(line);
+            size_t columnIndex = 0;
+            std::string cell;
+            while (std::getline(lineStream, cell, ',')) {
+                if (columnIndex < columnNames.size()) {
+                    rowData[columnNames[columnIndex]] = cell;
+                }
+                columnIndex++;
+            }
+            data.push_back(rowData);
+        }
+    } else {
+        std::cerr << "Failed to read the header row." << std::endl;
+    }
+
+    // Close the file
+    file.close();
+
+    return data;
+}
 
 // Callback function to write the HTTP response data
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* response) {
