@@ -74,8 +74,10 @@ int main() {
         return 1;
     }
 
+    std::vector<std::string> endpoints{"vehiclePositions", "tripUpdates"};
+
     // Set the target URL
-    std::string url = "https://api.stm.info/pub/od/gtfs-rt/ic/v2/vehiclePositions";
+    std::string url = "https://api.stm.info/pub/od/gtfs-rt/ic/v2/" + endpoints.at(0);
 
     // Set the request headers
     struct curl_slist* headers = NULL;
