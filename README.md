@@ -11,8 +11,9 @@ This project uses the [STM](https://www.stm.info/en) [GTFS API](https://gtfs.org
 ## Build Instructions
 
 1. Clone or download this repository
-2. Navigate to the project directory
-3. Create a build directory: `mkdir build && cd build`
-4. Generate the build files: `cmake ..`
-5. Build the project: `cmake --build .`
-6. Run the executable `HttpPostProtoExample`
+2. Download and extract the information files from [STM](http://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip); extract them to `stm_data`
+3. Navigate to the project directory
+4. Create a build directory: `mkdir build && cd build`
+5. Generate the build files: `cmake ..`
+6. Build the project: `cmake --build .`
+7. Run the executable `HttpPostProtoExample`
