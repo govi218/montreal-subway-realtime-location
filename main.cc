@@ -112,8 +112,16 @@ int main() {
         return 1;
     }
 
-    // Display the response message
-    std::cout << response.DebugString() << std::endl;
+    std::string outputFilePath("./output.txt");
+
+    std::ofstream outputFile(outputFilePath);
+    if (!outputFile.is_open()) {
+        std::cerr << "Failed to open file: " << outputFilePath << std::endl;
+        return 1;
+    }
+    outputFile << response.DebugString() << std::endl;
+
+    auto routeData = parseCSV("../stm_data/routes.txt");
 
     return 0;
 }
