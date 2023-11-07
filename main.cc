@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
-#include "./protobuf/gtfs-realtime.proto3.pb.h"
+#include "./protobuf/gtfs-realtime.pb.h"
 
-using namespace MontrealSubwayRealtimeLocation;
+using namespace transit_realtime;
 
 // Callback function to write the HTTP response data
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* response) {
@@ -24,7 +24,7 @@ int main() {
     }
 
     // Set the target URL
-    std::string url = "https://api.stm.info/pub/od/gtfs-rt/ic/v2/tripUpdates";
+    std::string url = "https://api.stm.info/pub/od/gtfs-rt/ic/v2/vehiclePositions";
 
     // Set the request headers
     struct curl_slist* headers = NULL;
